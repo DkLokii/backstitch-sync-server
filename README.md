@@ -2,29 +2,9 @@
 
 This is an Automerge-based TCP sync server, intended for use with the Godot version control plugin [Backstitch](https://backstitch.dev/).
 
-Join our [Discord](https://discord.gg/SkW9vem5Ez)!
+Join our [Discord](https://discord.gg/SkW9vem5Ez) for support & community!
 
-## Installation
-
-Clone this repository locally. To build and run, first, install [Rust and Cargo](https://rust-lang.org/tools/install/). Then, to install `just`, run:
-
-```
-cargo install just
-```
-
-## Usage
-
-To build and run the server with defaults, use `just run`:
-
-```
-just run [data_dir] [port] [http_port] [debug|release]
-```
-
-Data will be stored to `./data` by default, but can be overridden.
-
-The server will run a TCP `samod` connection at `localhost:8085`, as well as an HTTP server for testing at `localhost:3000`. 
-
-## Docker
+## Docker - Easiest Setup
 
 An example Docker Compose configuration is available in `compose.example.yml`. It runs the image from the ghcr.io `backstitch-sync-server` package.
 
@@ -49,6 +29,26 @@ The container uses these defaults:
 | `DATA_DIR` | `/data` | Directory where sync data is stored. Mount this as a volume for persistence. |
 | `PORT` | `8085` | TCP `samod` sync server port. |
 | `HTTP_PORT` | `3000` | HTTP server port for testing and document inspection. |
+
+## Building & Manual Installation
+
+Clone this repository locally. To build and run, first, install [Rust and Cargo](https://rust-lang.org/tools/install/). Then, to install `just`, run:
+
+```
+cargo install just
+```
+
+## Usage
+
+To build and run the server with defaults, use `just run`:
+
+```
+just run [data_dir] [port] [http_port] [debug|release]
+```
+
+Data will be stored to `./data` by default, but can be overridden.
+
+The server will run a TCP `samod` connection at `localhost:8085`, as well as an HTTP server for testing at `localhost:3000`. 
 
 
 ## IMPORTANT: Security!
