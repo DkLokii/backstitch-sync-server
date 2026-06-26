@@ -1,4 +1,4 @@
-FROM rust:1-trixie AS builder
+FROM rust:1.75-slim AS builder
 
 WORKDIR /app
 
@@ -6,24 +6,14 @@ COPY . .
 
 RUN cargo build --release
 
-FROM debian:13-slim AS runtime
+FROM debian:bookworm-slim
 
-RUN useradd --uid 10001 --create-home --shell /usr/sbin/nologin backstitch \
-    && mkdir -p /data \
-    && chown -R backstitch:backstitch /data
+WORKDIR /app
 
-COPY --from=builder /app/target/release/server /usr/local/bin/backstitch-sync-server
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
-USER backstitch
+COPY --from=builder /app/target/release/backstitch-sync-server .
 
-ENV DATA_DIR=/data
-ENV PORT=8085
-ENV HTTP_PORT=3000
-ENV RUST_LOG=info,samod=info,samod_core=info
+EXPOSE 8085
 
-VOLUME ["/data"]
-
-EXPOSE 8085/tcp
-EXPOSE 3000/tcp
-
-ENTRYPOINT ["backstitch-sync-server"]
+CMD ["./backstitch-sync-server", ".", "8085", "3000", "release"]
