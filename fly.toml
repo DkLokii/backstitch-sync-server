@@ -1,0 +1,13 @@
+app = "godot-game-sync-team-12432"
+primary_region = "iad"
+
+[build]
+  builder = "paketobuildpacks/builder-jammy-full:latest"
+
+[[services]]
+  internal_port = 8085
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["tls"]
+    port = 443
