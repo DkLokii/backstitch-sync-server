@@ -1,0 +1,15 @@
+services:
+  
+type: web
+  name: backstitch-sync-server
+  env: rust
+  plan: free
+  buildCommand: cargo build --release
+  startCommand: ./target/release/backstitch-sync-server ./data 8085 3000 release
+  disk:
+    name: backstitch-storage
+    mountPath: /data
+    sizeGB: 1
+  envVars:
+key: PORT
+    value: 8085
